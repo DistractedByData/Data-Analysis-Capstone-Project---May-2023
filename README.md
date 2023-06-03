@@ -1,5 +1,6 @@
 # Data Analysis Capstone Project: NHL Season 2022-23 Analysis
-To view the presentation you can open the .html file called "Data Analysis Capstone Project NHL Shots.html" in your browser
+To view the presentation [click here.](https://somanydistractions.github.io/Data-Analysis-Capstone-Project---May-2023)
+
 - To navigate the presentation use the arrows on your keyboard (up,down,left,right)
 
 As part of my journey on the [data analysis career path](https://join.codecademy.com/learn/paths/data-analyst-b/), I undertook a final independent project, focusing on an area of great interest to me - the National Hockey League (NHL). The aim of this project was to perform a comprehensive analysis of every shot taken during the 2022-23 regular season.
