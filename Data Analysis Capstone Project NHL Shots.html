@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>NHL Statistical Analysis</title>
+
+    <link rel="stylesheet" href="presentation/dist/reset.css">
+    <link rel="stylesheet" href="presentation/dist/reveal.css">
+    <link rel="stylesheet" href="presentation/dist/theme/simple.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="presentation/plugin/highlight/monokai.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <div class="slides">
+
+        <section>
+          <img src="https://www-league.nhlstatic.com/images/logos/league-dark/133.svg" alt="NHL logo" style="height: 160px;margin: 0 auto 4rem auto; background: transparent;">
+          <h5>Data-Driven Analysis of Shots during the 2022/23 NHL Season</h5> 
+          <p>
+            <small>
+            Created by:
+            <a href='https://distractedbydata.com', target="_blank">Kolby Klassen</a></p>
+            <p>
+            <a href='https://github.com/SoManyDistractions/NHL-Capstone-Project/blob/main/May%2022%20Draft%20project.ipynb', target="_blank"><em>View the full analysis on Github</em></a>
+            </small>
+          </p> 
+        </section>
+
+        <section>
+          <section>
+            <h2>Research Objective</h2>
+            <p>Utilizing shot data from the latest NHL season, my objective is to derive actionable insights that can steer strategic decisions, ultimately amplifying a team's goal-scoring performance.</p>
+            <p>  To accomplish this, we'll address 5 key research questions:</p>
+            <p style="margin-top: 100px; width: 100%; text-align: center; font-size: small;">Research Questions</p>
+            <p style="text-align: center;"><i class="fas fa-arrow-down"></i></p>
+          </section>
+          <section>
+          <h4><b>Research Question 1:</b> In the context of the NHL, what is considered a high scoring percentage?</h4>
+
+          </section>
+          <section>
+          <h4><b>Research Question 2:</b> What is the most common shot type?</h4>
+
+          </section>
+          <section>
+          <h4><b>Research Question 3:</b> When do players typically score during their shifts?</h4>
+
+          </section>
+          
+          <section>
+            <h4><b>Research Question 4:</b> Do players score more in a specific period - the first, second, or third?</h4>
+            <p style="margin-top: 50px;"></p>
+          </section>
+          
+          <section>
+          <h4><b>Research Question 5:</b> Where on the rink are most shots made from?</h4>
+          <p style="margin-top: 50px;"></p>
+
+             <p style="margin-bottom: 100px; text-align: center;"></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+          <h2>Audience</h2>
+          
+          <p>This statistical analysis is tailored for the strategic minds behind NHL teams - namely, head coaches, assistant coaches, and key members of the coaching staff.</p>
+          <h3 style="margin-top: 100px; width: 100%; text-align: center; font-size: large;">Potential Applications</h3>
+          <p style="text-align: center;"><i class="fas fa-arrow-down"></i></p>
+        </section>
+            <section>
+              <h4 style="margin-top: 50px;"><b>i. Making the Most of Shifts:</b></h4> 
+              <p>My research indicates that the beginning of a player's shift is a critical window for scoring goals. This insight could aid in player deployment and rotation strategies.</p>
+            </section>
+            <section>
+              <h4 style="margin-top: 50px;"><b>ii. Train Smarter and Manage Better:</b></h4>
+              <p>My analysis shows that the final period is where scoring odds are highest. I've also identified the shot types that are most likely to find the net. By applying these insights, coaches can enrich training practices and refine game strategies.</p>
+            </section>
+            <section>
+              <h4 style="margin-top: 50px;"><b>iii. Goal-Heavy Zones on the Rink:</b></h4>
+              <p>One key question I address in my research is where on the rink most goals are scored, and conversely, where most shots are unsuccessful. This spatial analysis can be crucial for the creation of succesful offensive strategies.</p>
+              <p style="margin-bottom: 100px; text-align: center;"></p>
+            </section>
+        </section>
+
+        <section>
+          <section>
+          <h4><b>Research Question 1:</b> In the context of the NHL, what is considered a high scoring percentage?</h4>
+          <small>
+            <p style="margin-top: 50px;"></p>
+            <ul>
+              <li>Identify what constitutes a high scoring percentage in relation to the entire league, providing a benchmark for individual performance.</li>
+              <li>Explore the distribution of scoring probabilities and understand differences based on player position.</li>
+            </ul>
+          </small>
+          <small>
+          <p style="margin-top: 150px;">
+          \[\begin{aligned}
+          (Scoring Percent) = Total Shots / Total Goals
+          \end{aligned} \]
+        </p>
+          </small>
+          </section>
+            <section style="margin-top: 20px; text-aligh: center;">            
+            <h4>Visualizing Distribution with a Histogram</h4>
+            <small>
+            <p>After cleaning the data, an inital step I took was to plot the scoring percentage using a histogram.</p>
+            </small>
+            <img src="media/ScoringProb1.png" alt="NHL scoring distribution" style="width: 650px; background: transparent;">
+          </section>
+          <section>
+            <p style="margin-bottom: 50px; text-aligh: center;">A histogram highlights the shape of the distribution, provides context for interpreting statistics such as the mean, and also <u>highlights</u> outlier data points (i.e. the red arrow).</p>
+            <p>In this case, the right skewness indicates that there may be more players with lower shot scoring percentages and a few exceptional performers with high percentages.</p>
+          </section>
+          <section>
+            <h3>A Discussion about Outliers</h3>
+            <p> Before attempting to draw new conclusions from the data, it is crucial to understand the data in it's context.</p>
+            <small>
+            <p>For example, the <a href="#/3/1">histogram</a> above shows someone with a 100% scoring percentage, while the average is 5.93% across the entire league! This abnormal data point skews the distribution significantly. How should this be dealt with?</p>
+            
+            <p>To answer this question, it is crucial to dig deeper and learn why the data point exists in the first place!</p>
+            <p><em> I was curious to know who has a 100% scoring percentage, but its better to watch than to read - Take a look below:</em></p>
+            </small>
+          </section>
+          <section>
+            <video data-autoplay src='media/goalie_goal.mp4' controls title="Linus Ullmark">
+          </section>
+          <section>
+            <p>The above video of Linus Ullmark, a goalie, explains the 100% scoring percentage previously observed in the <a href="#/3/1">histogram</a> - it is rare for a goalie to get a shot on net, let alone a goal!</p>
+            <small>
+              <p>In fact, I was curious so I did some extra digging:</p>
+              <ul>
+                <li>Only <b>9 goalies</b> - including Ullmark - have scored a goal during a NHL season.</li>
+              </ul>
+            </small>
+              </section>
+              <section>
+                <h4>Returning to the initial question now...</h4>
+                <h6>I chose to remove the outliers above 25%, and also exclude any 0% scoring percentage to focus my analysis on the bulk of the data distribution.</h6>
+                <img src="media/hist25.png" alt="NHL scoring distribution under 25 percent" style="height: 450px; background: transparent;">
+              </section>
+            <section>
+              <p>The rise in mean after removing outliers suggests that the inclusion of players with 0% scoring percentage, possibly due to injury or limited playing time, skewed the distribution and lowered the overall average. </p>
+                <p> While the leftward position of the median highlights the influence of high-scoring outliers on pulling the mean towards the right in a right-skewed distribution.</p>
+              </section>
+              <section>
+              <h4>Comparison by position</h4>
+              <p>Forwards against defence - on average, which group has a higher scoring percentage?</p>
+              <img src="media/positions_hist.png" alt="scoring distribution by NHL position" style="height: 500px; background: transparent;">
+            </section>
+            <section>
+              <h3>Forwards have a higher scoring percentage collectively, on average in comparison to defence, with a difference of <b>4.21%</b> or <b>2.01x!</b></h3>
+              <p style="margin-top: 75px;">A summary of new insights from Q.1</p>
+              <small>
+                <ul>
+                  <li>In the 2022/23 NHL season, the average scoring percentage for <u>all players</u> was <b>5.93%</b>,</li>
+                  <li>The average scoring percentage for <u>forwards</u> was <b>8.39%</b>,</li>
+                  <li>While the average scoring percentage for <u>defence</u> was <b>4.18%</b>.</li>
+              </small>
+              </section>
+           </section>
+
+
+        <section>
+          <section>
+          <h4><b>Research Question 2:</b> What is the most common shot type?</h4>
+          <small>
+            <p style="margin-top: 50px;"></p>
+              <ul>
+                <li>Do forwards and defence shoot using different types of shots?</li>
+                <li>Do some types of shots have a higher scoring probability?</li>
+                <li>Do more goals occur than expected from any given shot type based on position?</li>
+              </ul>
+          </small>
+          </section>
+          <section style="display: flex; flex-direction: column; align-items: center;">
+            <h4>Wrist shots are significantly the most common shot type across both positions.</h4>
+            <img src="media/shottype_pos.png" alt="Shot Type Comparison by Position" style="width: 800px; background: transparent;">
+            <small>
+            <ul style="display: flex; margin-top: 50px; justify-content: center; list-style-type: none; padding-inline-start: 0;">
+              <li style="margin-right: 10px;"><small>*Backhand shot (BACK)</small></li>
+              <li style="margin-right: 10px;"><small>*Deflection shot (DEFL)</small></li>
+              <li style="margin-right: 10px;"><small>*Wraparound shot (WRAP)</small></li>
+            </ul>
+          </small>
+          </section>
+            <section>
+            <h4>But, what percent of outcomes are succesful - i.e. result in a goal - for each shot type?</h4>
+          </section>
+          <section>
+            <p>Comparison of Shot Outcomes</p>
+              <img src="media/shotScoring_prob.png" alt="Shot Type Scoring probabilities comparison" style="width: 800px">
+     
+          </section>
+
+<section>
+        <h4>Wrist Shot</h4>
+        <p>No Goal: 55%</p>
+        <p>Goal: 51%</p>
+        <p>Insight: Wrist shots have a moderate success rate, with slightly more shots failing to result in a goal. They still account for a significant portion of goals scored.</p>
+      </section>
+      <section>
+        <h4>Tip-In Shot</h4>
+        <p>No Goal: 9%</p>
+        <p>Goal: 11%</p>
+        <p>Insight: Tip-in shots have a relatively lower success rate compared to other shot types, indicating the need for precision and timing to convert them into goals.</p>
+      </section>
+      <section>
+        <h4>Snap Shot</h4>
+        <p>No Goal: 16%</p>
+        <p>Goal: 20%</p>
+        <p>Insight: Snap shots have a higher success rate compared to tip-ins, suggesting that they are more effective in scoring goals.</p>
+      </section>
+      <section>
+        <h4>Slap Shot</h4>
+        <p>No Goal: 13%</p>
+        <p>Goal: 9%</p>
+        <p>Insight: Slap shots have a slightly higher percentage of unsuccessful attempts compared to successful ones, indicating the need for accuracy and power.</p>
+      </section>
+      <section>
+        <h4>Backhand Shot</h4>
+        <p>No Goal: 8%</p>
+        <p>Goal: 9%</p>
+        <p>Insight: Backhand shots have a relatively balanced success rate and may require finesse and precise execution to score goals.</p>
+      </section>
+      <section>
+  <p>As a coach, these insights can yield improved decision making. To further establish a statistical basis for strategic development, I will now be conducting a chi-square test.</p>
+  <small>
+  <p>This statistical test helps determine whether the observed distribution of goals across shot types is significantly different from what would be expected by chance.</p>
+  <p>By plotting the results on a contingency plot, you can easily identify shots with a statistically higher chance of going in than expected. These shots will have higher numbers and appear greener in color.</p>
+</small>
+      </section>
+          <section>
+            <h4>Forwards vs. Defence - Statistical Insights on Goal Scoring</h4>
+            <img src="media/exp_heatmap.png" alt="Variation in Goal Frequencies" style="height: 500px; background: transparent;">
+            <small><em>Numbers denote the shot type's goal scoring ratio exceeding statistical expectations, calculated using a Chi-square contingency test.</em></small>
+          </section>
+          <section>
+<p>The heatmap serves as a visual tool for presenting insights derived from the Chi-square analysis, which can reveal intriguing patterns. Analyzing the heatmap allows you to gain insights into the relationship between shot types, positions, and goal frequencies. </p>
+<small><p> For example, the positive difference of 0.02 for slapshots suggest that defense players have a statistical advantage in scoring goals with that particular shot type; this could be due to a number of factors, one being if they practice more using a slapshot.</p>
+<p>This information helps identify positional strengths and weaknesses, enabling informed decisions and strategies based on observed statistical advantages or disadvantages.</p></small>
+          </section>
+
+        </section>
+
+          <!-- Insert analysis for Q2 here now! -->
+        <section>
+          <section>
+          <h4><b>Research Question 3:</b> When do players typically score during their shifts?</h4>
+          <small>
+          <p style="margin-top: 50px;"></p>
+          <ul>
+            <li>What is the average duration of a player's shift?</li>
+            <li>Is there a specific time within a player's shift when goals are commonly scored?</li>
+            </ul>
+            </small>  
+          </section>
+          <section>
+            <h4>To gain a better understanding of shift length, it is valuable to determine the average duration of a shift. </h4>
+
+            <img src="media/Shift_avg.png" height="500px" alt="Average Shift Length">
+
+          </section>
+          <section>
+            <p> The previous chart demonstrates a noticeable decrease in the frequency of shifts that surpass the 50-120 second range. This observation aligns with the general understanding among hockey enthusiasts that shifts lasting over 2 minutes are infrequent.</p>
+            <small><p>As we move forward, I will exclude shifts with durations exceeding 120 seconds in the upcoming plots. This filtering allows us to concentrate on the central part of the data distribution and gain a more focused understanding of the majority of shifts.</p>
+            </small>
+          </section>
+          <section>
+            <h4 style="margin-bottom: -10px; margin-top: 20px;">Excluding shifts where the length exceeded 2 minutes, the average shift length when a goal is scored is 35.3 seconds.</h4>
+            
+            <img src="media/shift_length.png" height="550px" alt="Shift Length Avg When Goal is Scored">
+          </section>
+          <section>
+            <p>
+              This scatterplot demonstrates a clear trend during the first 35 seconds of a shift, indicating a positive relationship between time on ice and the probability of scoring. As the time on ice increases, the likelihood of scoring also increases. </p>
+              <p>However, after reaching a peak around the mean, the trend shifts abruptly, showing a negative correlation. In this portion of a shift, more time on ice tends to result in fewer goals.</p>
+            
+          </section>
+
+          <section>
+            <h3>Research Question 3. Summary </h3>
+            <p>Goals tend to be scored within the first 35.3 seconds of shifts that last less than 2 minutes, underlining the need for quick offensive actions. </p>
+              <p>One takeaway based on these findings is a need for coaches to prioritize conditioning and stamina training to optimize player performance within these shorter timeframes. </p>
+          </section>
+        </section>
+
+                <!-- Insert analysis for Q3 here now! -->
+        <section>
+        <section>
+            <h4><b>Research Question 4:</b> Do players score more in a specific period - the first, second, or third?</h4>
+            <p style="margin-top: 50px;"></p>
+            <small>
+              <ul>
+                <li>Absolute comparison</li>
+                <li>Relative comparison</li>
+              </ul>
+            </small>
+        </section>
+
+        <section>
+            <h4>In pursuit of answering Research Question 4, I'll continue to build upon our understanding of game dynamics, examining how scoring likelihood associates with different periods in the game.</h4>
+            <small>
+              <p>For instance, do we observe a higher incidence of goals scored at the onset of the game when players presumably possess the most energy? Alternatively, do we see an increase in scoring as the game unfolds, potentially suggesting one team's superior endurance and conditioning?</p>
+            </small>
+        </section>
+
+        <section>
+            <p>To begin, let's take a look at the average total shots and total goals per period.</p>
+            <img src="media/ShotsPeriods.png" alt="Shots per Period" height="500px">
+        </section>
+
+        <section>
+            <p>While the second period leads in terms of both shots taken and goals scored, these results are derived from absolute counts, as depicted on the bar chart.</p>
+          <p>By shifting our analysis to a relative perspective, such as plotting the ratio of goals to total shots for each period, we may further explore whether the scoring probability remains highest during the second period.</p>
+        </section>
+
+        <section>
+            <h4>Switching to a relative comparison reveals a different trend.</h4>
+            <img src="media/relativeshotcomp.png" alt="Relative Shots per Period" height="450px">
+            <small>
+              <p>As the game progresses, the scoring percentage, on average, rises by 1% per period. This implies that the final period witnesses the most goals scored relative to shots taken!</p>
+            </small>
+        </section>
+        <section>
+          <p> The analysis of game dynamics in hockey shows that, despite the second period leading in terms of absolute shots taken and goals scored, a relative comparison reveals that the scoring percentage progressively rises by 1% per period.</p>
+            <p>This indicates that the most efficient scoring, relative to shots taken, occurs in the final period, a critical finding for coaches in managing player deployment and strategizing scoring opportunities.
+          </p>
+        </section>
+        <section>
+          <p>In addressing Research Question 4, we've revealed critical insights into scoring dynamics over the course of a hockey game. </p>
+          <small>
+          <p>By distinguishing between absolute and relative scoring patterns, we discovered that while the second period often sees the most shots taken and goals scored in raw counts, the scoring efficiency—goals scored relative to shots taken—actually improves with each advancing period.</p>
+          <p> This nuanced understanding is invaluable for coaches and teams, empowering them to strategically manage player deployment, optimize scoring opportunities, and adjust game plans as the match unfolds. Ultimately, this analysis highlights the significant role of strategic timing in enhancing team performance and goal-scoring efficiency in hockey.</p>
+        </small>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h4><b>Research Question 5:</b> Where on the rink are most shots made from?</h4>
+          <p style="margin-top: 50px;"></p>
+          <ul>
+            <small>
+            <li>Do shots resulting in goals originate from different locations on average?</li>
+          </small>
+          </ul>
+        </section>
+        <section>
+          <p>Identifying patterns in successful versus unsuccessful shots can yield insights into optimal offensive plays.</p>
+          <h4>In the final research question, I'll aim to pinpoint the most common locations on the ice for shots, further refining our understanding of effective goal-scoring strategies.</h4>
+          
+        </section>
+        <section>
+          <p>The dimensions of the density heatmap mirror those of an official NHL hockey rink—200 feet in length and 85 feet in width.</p>
+          <img src="media/Allshots_heatmap.png" height="500px" alt="Heatmap of shot locations">
+          <p> Regions with brighter hues correspond to higher scoring probabilities.</p>
+        </section>
+        <section>
+          <p>The heatmap, which plots shot frequency based on x and y rink coordinates, reveals an immediate pattern: most shots take place near the goalie net. Even without explicitly marking the net's location, its probable position is clear.</p>
+
+          <p> As we move forward, adding these key landmarks will refine our analysis and understanding. Furthermore, we'll break down shot locations by outcome—goal or no goal—to discern any positional advantages.</p>
+        </section>
+        <section>
+          <img src="media/heatmap.png" height="600px" alt="Heatmap of shots by outcome">
+          <small><p style="margin-top: -25px">Yellow line: Goalies Net  |   Blue Line: Blue Line  |   Red Line: Center Ice</small>
+        </section>
+        <section>
+          <p>By incorporating landmarks such as the goalie net and grouping the shots based on their outcome (goal or no goal), we can uncover valuable insights. One notable finding is that shots that result in a goal tend to be closer in physical distance to the goalie, on average.</p>
+                    <p>These findings suggests that proximity to the goalie plays a crucial role in determining the success of a shot. 
+        </section>
+        <section>
+          <p>Summarizing Research Question 5, our findings underscore the role of location in developing coaching strategies for optimizing goal scoring. </p>
+            <p>Coaches can use this analysis to decide where on the rink to position their players.</p>
+            <small>
+          <p> For example, forwards' higher scoring percentage and the type of shots they typically make, such as TIP shots that have a higher-than-expected probability of resulting in a goal, suggest certain strategies. Practicing TIP shots near the goal, given the heatmap evidence of their effectiveness, could be a potential strategy to improve scoring outcomes.</p>
+        </small>
+        </section>
+      </section>
+
+
+      <section>
+        <section>
+          <h4> Future Research </h4>
+          <p> This concludes my data analysis capstone project! Before I depart, I would like to share final words on areas of future research that I believe could extend from this analysis.</p>
+        </section>
+        <section>
+          <small>
+          <p>I would be very curious to apply these research questions on a more specific scenario, such as by focusing on a specific NHL team as opposed to analyzing the entire league. This could offer new interesting insights, that would offer more direct application. For instance, learning the expected scoring percentages based on the type of shot made offered interesting insight in this analysis, but it was league wide; if I drill down and compare the analysis with specific teams, to analyze their players expected scoring probabilities with different shot types, I could potentially discover patterns to exploit. If the team has a even greater deviation from the expected scoring probability than the leagues average, this insight would hint at the teams players being more skilled with those shot types; whether this be measured by accuracy, speed, etc.</p>
+        <p>I can envision the benefits of obtaining more detailed analysis on a team - and player by player - basis to craft more optimal offensive and defensive strategisies, leading to more goals for and less goals against, resulting in a better overall team.</p></small>
+      </section>
+        <section>
+          <h3>About the Data</h3>
+          <small>
+          <ul>
+              <li>The dataset used contains all shots during the 2022/23 NHL regular season</li>
+              <li>The total shot count is roughly 121,000 shots</li>
+              <li>Each shot contains roughly 137 various features associated with it (e.g. shooter name, shot type, x/y cordinates)</li>
+              <li>The data is sourced from: <a href="https://moneypuck.com/data.htm", target="_blank">moneypuck.com</a></li>
+          </ul>
+        </small>
+        </section>
+                <section>
+          <p>
+            <small>
+            Created by:
+            <a href='https://distractedbydata.com', target="_blank">Kolby Klassen</a></p>
+
+            <a href='https://github.com/SoManyDistractions/NHL-Capstone-Project/blob/main/May%2022%20Draft%20project.ipynb', target="_blank"><em>View the full analysis on Github</em></a>
+            </small>
+
+        </section>
+      </section>
+
+        </div>
+
+      </div>
+
+      <script src="presentation/dist/reveal.js"></script>
+      <script src="presentation/plugin/notes/notes.js"></script>
+      <script src="presentation/plugin/markdown/markdown.js"></script>
+      <script src="presentation/plugin/highlight/highlight.js"></script>
+      <script src="presentation/plugin/math/math.js"></script>
+
+      <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+          hash: true,
+          autoAnimateStyles: [
+        'line-height'
+      ],katex: {
+    version: 'latest',
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false},
+      {left: '\\(', right: '\\)', display: false},
+      {left: '\\[', right: '\\]', display: true}
+   ],
+   ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+ },
+
+
+          // Learn about plugins: https://revealjs.com/plugins/
+          plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+        });
+      </script>
+
+    </body>
+  </html>
