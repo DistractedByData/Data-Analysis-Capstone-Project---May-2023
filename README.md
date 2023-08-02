@@ -1,5 +1,5 @@
 # Data Analysis Capstone Project: NHL Season 2022-23 Analysis
-To view the presentation [click here.](https://somanydistractions.github.io/Data-Analysis-Capstone-Project---May-2023)
+To view the presentation [click here.](https://distractedbydata.github.io/Data-Analysis-Capstone-Project---May-2023/)
 - **To navigate the presentation use the arrows on your keyboard (up,down,left,right)**
 
 To view the analysis in a jupyter notebook [click here.](https://github.com/SoManyDistractions/Data-Analysis-Capstone-Project---May-2023/blob/main/NHL%20Shot%20Analysis%20-%20Capstone%20Data%20Analysis%20Project.ipynb)
